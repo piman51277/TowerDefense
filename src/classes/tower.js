@@ -1,0 +1,50 @@
+class Tower {
+    range = 10;
+    activeRanges = [];
+    path = gamePath;
+    maxCooldown = 1;
+    cooldown = 0;
+    attackStrength = 1;
+    maxTargets = 1;
+    constructor(x, y) {
+        this.coords = [x, y];
+    }
+    inRange(pos) {
+        for (const set in this.activeRanges) {
+            const [min, max] = this.activeRanges[set]
+            if (pos >= min && pos <= max) return true;
+        }
+        return false;
+    }
+    findEnemiesInRange() {
+        const enemiesInRange = []
+        for (let enemy in enemies) {
+            if (this.inRange(enemies[enemy].pos)) {
+                enemiesInRange.push(enemies[enemy])
+            }
+        }
+
+        if (enemiesInRange.length > 0) {
+            if (this.cooldown == 0) {
+                for (let targetNum = 0; targetNum < Math.min(this.maxTargets, enemiesInRange.length); targetNum++) {
+                    this.attack(enemiesInRange[targetNum])
+                }
+                this.cooldown = this.maxCooldown
+            } else {
+                this.cooldown--;
+            }
+        }
+    }
+    attack(enemy) {
+        const [ex, ey] = enemy.coords
+        canva.line(this.coords[0], this.coords[1], ex, ey)
+        enemy.takeDamage(this.attackStrength)
+    }
+    displayCooldown() {
+        const cooldownPercent = this.cooldown / this.maxCooldown
+        canva.fill(0, 255, 0)
+        canva.rect(this.coords[0] - 10, this.coords[1] + 10, 20, 5)
+        canva.fill(255, 0, 0)
+        canva.rect(this.coords[0] - 10, this.coords[1] + 10, 20 - 20 * cooldownPercent, 5)
+    }
+}
