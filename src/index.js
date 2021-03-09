@@ -79,9 +79,10 @@ $(document).ready(() => {
 
     setInterval(() => {
         enemies.push(new enemyTypes.basic)
+        enemies.push(new enemyTypes.tank)
     }, 500)
 
     canva.mouseClicked(() => {
-        towers.push(new towerTypes.basic(canva.mouseX, canva.mouseY))
+        towers.push(new towerTypes.machinegun(canva.mouseX, canva.mouseY))
     })
 })
