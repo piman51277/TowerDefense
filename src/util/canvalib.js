@@ -16,7 +16,6 @@ class canvas {
             this.mouseY = event.clientY;
             this.onMouseMove();
         })
-
     }
 
     //SHAPES
@@ -150,6 +149,14 @@ class canvas {
      */
     text(text, x, y) {
         ctx.fillText(text, x, y);
+    }
+
+    setFont(font) {
+        ctx.font = font;
+    }
+
+    textAlign(align) {
+        ctx.textAlign = align
     }
 
     //MOUSE

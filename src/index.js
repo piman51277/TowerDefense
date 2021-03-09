@@ -1,4 +1,5 @@
 let canva;
+let canvasObj;
 
 const gamePath = new Path([
     [100, 50],
@@ -25,6 +26,8 @@ let towers = [
     new towerTypes.basic(250, 200)
 ];
 
+let selectedTower = 'basic'
+
 function processTick() {
     //towers attack
     for (let tower in towers) {
@@ -41,9 +44,11 @@ function processTick() {
     }
 }
 
-function display() {
+//dynamic componets of display
+function refreshDisplay() {
     //set background
-    canva.background(255, 255, 255)
+    canva.fill(255, 255, 255)
+    canva.rect(0, 0, 850, 1000)
 
     //draw path
     for (let i = 1, j = 0; i < gamePath.pointArray.length; j = i++) {
@@ -61,20 +66,49 @@ function display() {
     for (let enemy in enemies) {
         enemies[enemy].display()
     }
+
+}
+
+//non-dynamic componets
+function display() {
+
+    //draw sidebar
+    canva.fill(200, 200, 200)
+    canva.rect(850, 0, 150, 1000)
+    canva.fill(0, 0, 0)
+    canva.setFont('30px Arial')
+    canva.textAlign('center')
+    canva.text("Towers", 925, 30)
+
+    //buttons
+    const towerButtons = {
+        basic: new button(860, 50, 40, 40),
+        machinegun: new button(950, 50, 40, 40)
+    }
+    canva.fill(100, 100, 100)
+    for (let name in towerButtons) {
+        const towerButton = towerButtons[name];
+        canva.rect(towerButton.x, towerButton.y, towerButton.width, towerButton.height)
+        towerButton.onClick = () => {
+            selectedTower = name;
+        }
+    }
 }
 
 $(document).ready(() => {
-    const canvasObj = document.getElementById("main")
+    canvasObj = document.getElementById("main")
     canva = new canvas(canvasObj)
 
     canvasObj.width = 1000;
     canvasObj.height = 1000;
 
+    display();
+
     setInterval(() => {
         processTick();
-    }, 20)
+    }, 10)
     setInterval(() => {
-        display();
+        refreshDisplay();
     }, 20)
 
     setInterval(() => {
@@ -83,6 +117,8 @@ $(document).ready(() => {
     }, 500)
 
     canva.mouseClicked(() => {
-        towers.push(new towerTypes.machinegun(canva.mouseX, canva.mouseY))
+        if (canva.mouseX < 850) {
+            towers.push(new towerTypes[selectedTower](canva.mouseX, canva.mouseY))
+        }
     })
 })
