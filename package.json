@@ -1,0 +1,21 @@
+{
+    "name": "towerdefense",
+    "description": "A small html5 tower defense game",
+    "version": "1.0.0",
+    "main": "src/index.html",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/piman51277/TowerDefense"
+    },
+    "author": "piman",
+    "bugs": {
+        "url": "https://github.com/piman51277/TowerDefense/issues"
+    },
+    "homepage": "https://github.com/piman51277/TowerDefense",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "express": "^4.17.1"
+    }
+}
