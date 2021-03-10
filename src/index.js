@@ -42,6 +42,9 @@ function processTick() {
     }
 }
 
+//buttons
+let towerButtons = {}
+
 //dynamic componets of display
 function refreshDisplay() {
     //set background
@@ -65,11 +68,6 @@ function refreshDisplay() {
         enemies[enemy].display()
     }
 
-}
-
-//non-dynamic componets
-function display() {
-
     //draw sidebar
     canva.fill(200, 200, 200)
     canva.rect(850, 0, 150, 1000)
@@ -78,13 +76,10 @@ function display() {
     canva.textAlign('center')
     canva.text("Towers", 925, 30)
 
+    //wave indicator
+    canva.text(`Wave: ${currentWave}`, 925, 980)
+
     //buttons
-    const towerButtons = {
-        basic: new button(860, 50, 40, 40),
-        machinegun: new button(905, 50, 40, 40),
-        shotgun: new button(950, 50, 40, 40),
-        sniper: new button(860, 95, 40, 40),
-    }
     canva.fill(100, 100, 100)
     for (let name in towerButtons) {
         const towerButton = towerButtons[name];
@@ -96,12 +91,67 @@ function display() {
     }
 }
 
+//non-dynamic componets
+function display() {
+    for (let name in towerButtons) {
+
+        const towerButton = towerButtons[name];
+        towerButton.onClick = () => {
+            selectedTower = name;
+        }
+    }
+}
+
+//waves
+let currentWave = 0;
+
+async function sendWaves() {
+    //check if wave even exists
+    if (waves[currentWave] == undefined) return;
+    //send wave
+    for (subwave in waves[currentWave]) {
+        const entry = waves[currentWave][subwave]
+        for (let count = 0; count < entry[1]; count++) {
+            enemies.push(new entry[0])
+
+            //wait for delay
+            await new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve();
+                }, 100 * entry[2])
+            })
+        }
+    }
+}
+
+async function manageWaves() {
+    for (i in waves) {
+        currentWave = i;
+        await sendWaves()
+        await new Promise((resolve) => {
+            setTimeout(() => {
+                resolve();
+            }, 1000)
+        })
+    }
+}
+
+
 $(document).ready(() => {
     canvasObj = document.getElementById("main")
     canva = new canvas(canvasObj)
 
     canvasObj.width = 1000;
     canvasObj.height = 1000;
+
+    //set button objects
+    towerButtons = {
+        basic: new button(860, 50, 40, 40),
+        machinegun: new button(905, 50, 40, 40),
+        shotgun: new button(950, 50, 40, 40),
+        sniper: new button(860, 95, 40, 40),
+    }
+
 
     display();
 
@@ -110,10 +160,7 @@ $(document).ready(() => {
         refreshDisplay();
     }, 15)
 
-    setInterval(() => {
-        enemies.push(new enemyTypes.basic)
-        enemies.push(new enemyTypes.tank)
-    }, 500)
+    manageWaves();
 
     canva.mouseClicked(() => {
         if (canva.mouseX < 850) {
