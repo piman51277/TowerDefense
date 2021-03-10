@@ -50,7 +50,7 @@ class Tower {
         canva.rect(this.coords[0] - 10, this.coords[1] + 10, 20 - 20 * cooldownPercent, 5)
 
         //range
-        canva.fill(0, 0, 0, 20)
+        canva.fill(0, 0, 0, 0)
         canva.ellipse(this.coords[0], this.coords[1], this.range * 2, this.range * 2)
 
         //icon
