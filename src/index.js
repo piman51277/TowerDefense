@@ -109,7 +109,7 @@ $(document).ready(() => {
     }, 10)
     setInterval(() => {
         refreshDisplay();
-    }, 20)
+    }, 10)
 
     setInterval(() => {
         enemies.push(new enemyTypes.basic)

@@ -7,6 +7,9 @@ class Tower {
     attackStrength = 1;
     maxTargets = 1;
     icon = "tower_basic";
+
+    //used for visualising shots
+    tracers = [];
     constructor(x, y) {
         this.coords = [x, y];
     }
@@ -24,11 +27,11 @@ class Tower {
                 enemiesInRange.push(enemies[enemy])
             }
         }
-
         if (enemiesInRange.length > 0) {
             if (this.cooldown == 0) {
                 for (let targetNum = 0; targetNum < Math.min(this.maxTargets, enemiesInRange.length); targetNum++) {
                     this.attack(enemiesInRange[targetNum])
+                    this.tracers.push(enemiesInRange[targetNum].coords)
                 }
                 this.cooldown = this.maxCooldown
             } else {
@@ -37,8 +40,6 @@ class Tower {
         }
     }
     attack(enemy) {
-        const [ex, ey] = enemy.coords
-        canva.line(this.coords[0], this.coords[1], ex, ey)
         enemy.takeDamage(this.attackStrength)
     }
     display() {
@@ -55,5 +56,13 @@ class Tower {
 
         //icon
         canva.image(this.icon, this.coords[0] - 10, this.coords[1] - 10);
+
+        //tracers
+        for (let tracer in this.tracers) {
+            const [tx, ty] = this.tracers[tracer]
+            canva.line(this.coords[0], this.coords[1], tx, ty)
+        }
+
+        this.tracers = []
     }
 }

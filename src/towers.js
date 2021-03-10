@@ -1,7 +1,7 @@
 class tower_basic extends Tower {
     range = 100;
     maxTargets = 1;
-    attackStrength = 2;
+    attackStrength = 3;
     maxCooldown = 20;
     activeRanges = this.path.getIntervalsForRange(this.coords[0], this.coords[1], this.range);
     icon = "tower_basic"
