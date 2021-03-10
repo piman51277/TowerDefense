@@ -82,7 +82,8 @@ function display() {
     const towerButtons = {
         basic: new button(860, 50, 40, 40),
         machinegun: new button(905, 50, 40, 40),
-        shotgun: new button(950, 50, 40, 40)
+        shotgun: new button(950, 50, 40, 40),
+        sniper: new button(860, 95, 40, 40),
     }
     canva.fill(100, 100, 100)
     for (let name in towerButtons) {
@@ -106,10 +107,8 @@ $(document).ready(() => {
 
     setInterval(() => {
         processTick();
-    }, 10)
-    setInterval(() => {
         refreshDisplay();
-    }, 10)
+    }, 15)
 
     setInterval(() => {
         enemies.push(new enemyTypes.basic)

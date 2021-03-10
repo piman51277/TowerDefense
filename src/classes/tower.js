@@ -21,6 +21,7 @@ class Tower {
         return false;
     }
     findEnemiesInRange() {
+        this.cooldown = Math.max(0, this.cooldown - 1);
         const enemiesInRange = []
         for (let enemy in enemies) {
             if (this.inRange(enemies[enemy].pos)) {
@@ -28,14 +29,12 @@ class Tower {
             }
         }
         if (enemiesInRange.length > 0) {
-            if (this.cooldown == 0) {
+            if (this.cooldown <= 0) {
                 for (let targetNum = 0; targetNum < Math.min(this.maxTargets, enemiesInRange.length); targetNum++) {
                     this.attack(enemiesInRange[targetNum])
                     this.tracers.push(enemiesInRange[targetNum].coords)
                 }
                 this.cooldown = this.maxCooldown
-            } else {
-                this.cooldown--;
             }
         }
     }
