@@ -6,6 +6,7 @@ class Enemy {
     health_max = 1;
     health = 1;
     icon = "enemy_basic"
+    reward = 1
     constructor() {}
     move() {
         this.pos += this.speed;

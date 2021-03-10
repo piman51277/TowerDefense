@@ -27,7 +27,7 @@ let enemies = [];
 let towers = [];
 
 let health = 1000;
-let money = 100;
+let money = 10;
 
 let isDead = false;
 
@@ -47,6 +47,7 @@ function processTick() {
             health -= enemies[enemy].health;
             enemies.splice(enemy, 1)
         } else if (enemies[enemy].health <= 0) {
+            money += enemies[enemy].reward
             enemies.splice(enemy, 1)
         } else {
             enemies[enemy].move()
@@ -96,6 +97,13 @@ function refreshDisplay() {
 
     //health indicator
     canva.text(`Health:`, 925, 900)
+
+    //money indicator
+    canva.text(`Money:`, 925, 825)
+    canva.text(money, 925, 860)
+
+
+    //sidebar
     canva.fill(255, 0, 0)
     canva.rect(875, 920, 100, 20)
     canva.fill(0, 255, 0)

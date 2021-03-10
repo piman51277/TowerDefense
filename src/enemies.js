@@ -3,6 +3,7 @@ class enemy_basic extends Enemy {
     health_max = 5
     health = 5;
     icon = "enemy_basic"
+    reward = 1;
 }
 
 class enemy_tank extends Enemy {
@@ -10,6 +11,7 @@ class enemy_tank extends Enemy {
     health_max = 100
     health = 100;
     icon = "enemy_tank"
+    reward = 2;
 }
 
 class enemy_fast extends Enemy {
@@ -17,6 +19,7 @@ class enemy_fast extends Enemy {
     health_max = 20
     health = 20;
     icon = "enemy_fast"
+    reward = 5
 }
 const enemyTypes = {
     basic: enemy_basic,
