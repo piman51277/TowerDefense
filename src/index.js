@@ -81,7 +81,8 @@ function display() {
     //buttons
     const towerButtons = {
         basic: new button(860, 50, 40, 40),
-        machinegun: new button(910, 50, 40, 40)
+        machinegun: new button(905, 50, 40, 40),
+        shotgun: new button(950, 50, 40, 40)
     }
     canva.fill(100, 100, 100)
     for (let name in towerButtons) {
