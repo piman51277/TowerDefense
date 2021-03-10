@@ -1,6 +1,8 @@
 let canva;
 let canvasObj;
 
+
+//board variables
 const gamePath = new Path([
     [100, 50],
     [100, 900],
@@ -24,6 +26,12 @@ const gamePath = new Path([
 let enemies = [];
 let towers = [];
 
+let health = 1000;
+let money = 100;
+
+let isDead = false;
+
+//used to tower placement
 let selectedTower = 'basic'
 
 function processTick() {
@@ -34,12 +42,19 @@ function processTick() {
 
     //move enemies
     for (let enemy in enemies) {
-        if (enemies[enemy].health <= 0 || enemies[enemy].pos > gamePath.totalLength) {
+        if (enemies[enemy].pos > gamePath.totalLength) {
+            //subtract health
+            health -= enemies[enemy].health;
+            enemies.splice(enemy, 1)
+        } else if (enemies[enemy].health <= 0) {
             enemies.splice(enemy, 1)
         } else {
             enemies[enemy].move()
         }
     }
+
+    //health
+    if (health <= 0) isDead = true;
 }
 
 //buttons
@@ -79,6 +94,13 @@ function refreshDisplay() {
     //wave indicator
     canva.text(`Wave: ${currentWave}`, 925, 980)
 
+    //health indicator
+    canva.text(`Health:`, 925, 900)
+    canva.fill(255, 0, 0)
+    canva.rect(875, 920, 100, 20)
+    canva.fill(0, 255, 0)
+    canva.rect(875, 920, Math.max(health / 10, 0), 20)
+
     //buttons
     canva.fill(100, 100, 100)
     for (let name in towerButtons) {
@@ -88,6 +110,14 @@ function refreshDisplay() {
         towerButton.onClick = () => {
             selectedTower = name;
         }
+    }
+
+    //game over overlay
+    if (isDead) {
+        canva.fill(100, 100, 100, 120)
+        canva.rect(100, 200, 800, 400)
+        canva.fill(0, 0, 0)
+        canva.text("Game over!", 500, 300)
     }
 }
 
@@ -163,7 +193,7 @@ $(document).ready(() => {
     manageWaves();
 
     canva.mouseClicked(() => {
-        if (canva.mouseX < 850) {
+        if (canva.mouseX < 850 && !isDead) {
             towers.push(new towerTypes[selectedTower](canva.mouseX, canva.mouseY))
         }
     })
