@@ -159,6 +159,10 @@ class canvas {
         ctx.textAlign = align
     }
 
+    image(id, x, y) {
+        ctx.drawImage(document.getElementById(id), x, y)
+    }
+
     //MOUSE
     mouseX = 0;
     mouseY = 0;

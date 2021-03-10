@@ -6,6 +6,7 @@ class Tower {
     cooldown = 0;
     attackStrength = 1;
     maxTargets = 1;
+    icon = "tower_basic";
     constructor(x, y) {
         this.coords = [x, y];
     }
@@ -40,11 +41,19 @@ class Tower {
         canva.line(this.coords[0], this.coords[1], ex, ey)
         enemy.takeDamage(this.attackStrength)
     }
-    displayCooldown() {
+    display() {
+        //cooldown meter
         const cooldownPercent = this.cooldown / this.maxCooldown
         canva.fill(0, 255, 0)
         canva.rect(this.coords[0] - 10, this.coords[1] + 10, 20, 5)
         canva.fill(255, 0, 0)
         canva.rect(this.coords[0] - 10, this.coords[1] + 10, 20 - 20 * cooldownPercent, 5)
+
+        //range
+        canva.fill(0, 0, 0, 20)
+        canva.ellipse(this.coords[0], this.coords[1], this.range * 2, this.range * 2)
+
+        //icon
+        canva.image(this.icon, this.coords[0] - 10, this.coords[1] - 10);
     }
 }

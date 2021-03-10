@@ -22,9 +22,7 @@ const gamePath = new Path([
 ])
 
 let enemies = [];
-let towers = [
-    new towerTypes.basic(250, 200)
-];
+let towers = [];
 
 let selectedTower = 'basic'
 
@@ -83,12 +81,13 @@ function display() {
     //buttons
     const towerButtons = {
         basic: new button(860, 50, 40, 40),
-        machinegun: new button(950, 50, 40, 40)
+        machinegun: new button(910, 50, 40, 40)
     }
     canva.fill(100, 100, 100)
     for (let name in towerButtons) {
         const towerButton = towerButtons[name];
         canva.rect(towerButton.x, towerButton.y, towerButton.width, towerButton.height)
+        canva.image(`tower_${name}`, towerButton.x + 10, towerButton.y + 10)
         towerButton.onClick = () => {
             selectedTower = name;
         }
