@@ -4,7 +4,8 @@ class tower_basic extends Tower {
     attackStrength = 3;
     maxCooldown = 50;
     activeRanges = this.path.getIntervalsForRange(this.coords[0], this.coords[1], this.range);
-    icon = "tower_basic"
+    icon = "tower_basic";
+    cost = 10;
 }
 
 class tower_machinegun extends Tower {
@@ -14,6 +15,7 @@ class tower_machinegun extends Tower {
     maxCooldown = 5;
     activeRanges = this.path.getIntervalsForRange(this.coords[0], this.coords[1], this.range);
     icon = "tower_machinegun"
+    cost = 50;
 }
 
 class tower_shotgun extends Tower {
@@ -23,15 +25,17 @@ class tower_shotgun extends Tower {
     maxCooldown = 80;
     activeRanges = this.path.getIntervalsForRange(this.coords[0], this.coords[1], this.range);
     icon = "tower_shotgun"
+    cost = 30;
 }
 
 class tower_sniper extends Tower {
     range = 200;
     maxTargets = 1;
-    attackStrength = 20;
+    attackStrength = 50;
     maxCooldown = 100;
     activeRanges = this.path.getIntervalsForRange(this.coords[0], this.coords[1], this.range);
     icon = "tower_sniper"
+    cost = 100;
 }
 
 const towerTypes = {

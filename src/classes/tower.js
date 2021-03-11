@@ -7,7 +7,7 @@ class Tower {
     attackStrength = 1;
     maxTargets = 1;
     icon = "tower_basic";
-
+    cost = 1;
     //used for visualising shots
     tracers = [];
     constructor(x, y) {

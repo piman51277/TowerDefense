@@ -202,7 +202,11 @@ $(document).ready(() => {
 
     canva.mouseClicked(() => {
         if (canva.mouseX < 850 && !isDead) {
-            towers.push(new towerTypes[selectedTower](canva.mouseX, canva.mouseY))
+            const tower = new towerTypes[selectedTower](canva.mouseX, canva.mouseY);
+            if (tower.cost >= money) {
+                towers.push(tower)
+                money -= tower.cost
+            }
         }
     })
 })
